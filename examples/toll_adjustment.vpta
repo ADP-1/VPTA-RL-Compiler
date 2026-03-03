@@ -1,0 +1,23 @@
+// ============================================================
+// VPTA-RL Example 2: Dynamic Toll Adjustment Rules
+// ============================================================
+
+// Peak-hour heavy vehicle surcharge
+IF congestion_level > 80 AND vehicle_class == "HEAVY"
+    THEN toll_fee = toll_fee * 1.5 ;
+
+// Off-peak discount for all vehicles
+IF time_of_day >= 22 OR time_of_day <= 6
+    THEN toll_fee = toll_fee * 0.75 ;
+
+// Electric vehicle discount
+IF vehicle_class == "ELECTRIC"
+    THEN toll_fee = toll_fee * 0.5 ;
+
+// Overloaded vehicle — deny entry entirely
+DENY VEHICLE_CLASS == "OVERLOADED" ENTRY main_plaza ;
+
+// Moderate congestion — light surcharge with normal fallback
+IF congestion_level > 60 AND vehicle_class == "LIGHT"
+    THEN toll_fee = toll_fee * 1.2
+    ELSE toll_fee = toll_fee * 1.0 ;

@@ -1,0 +1,27 @@
+// ============================================================
+// VPTA-RL Example 3: Error Recovery Test Cases
+// This file intentionally contains lexical and syntax errors.
+// ============================================================
+
+// ── Valid rule (should parse cleanly) ───────────────────────
+PRIORITY VEHICLE_CLASS == "AMBULANCE" SET SIGNAL GREEN ;
+
+// ── Error 1: Illegal character '@' ──────────────────────────
+// Lexer should skip '@' and continue; parser recovers at ';'
+IF @ speed > 120 THEN SET SIGNAL RED ;
+
+// ── Error 2: Unterminated string literal ────────────────────
+// Lexer recovers by treating end-of-line as closing quote
+IF vehicle_class == "HEAVY THEN toll_fee = toll_fee * 2.0 ;
+
+// ── Error 3: Missing THEN keyword ───────────────────────────
+// Parser should report error and synchronize at ';'
+IF congestion_level > 70 toll_fee = toll_fee * 1.3 ;
+
+// ── Error 4: Missing semicolon ──────────────────────────────
+// Parser uses insertion recovery and continues
+IF time_of_day >= 8 AND time_of_day <= 10
+    THEN toll_fee = toll_fee * 1.1
+
+// ── Valid rule after errors (should still be parsed) ────────
+ALLOW VEHICLE_CLASS == "ELECTRIC" ENTRY express_lane ;

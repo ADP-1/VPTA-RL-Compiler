@@ -1,0 +1,12 @@
+// ============================================================
+// VPTA-RL Example 1: Emergency Vehicle Priority Rules
+// ============================================================
+
+// Grant green signal to all emergency vehicles
+PRIORITY VEHICLE_CLASS == "AMBULANCE"  SET SIGNAL GREEN ;
+PRIORITY VEHICLE_CLASS == "FIRE_TRUCK" SET SIGNAL GREEN ;
+PRIORITY VEHICLE_CLASS == "POLICE"     SET SIGNAL GREEN ;
+
+// Block oncoming traffic on crossing lanes during emergency
+DENY VEHICLE_CLASS == "LIGHT"  ENTRY cross_lane_north ;
+DENY VEHICLE_CLASS == "HEAVY"  ENTRY cross_lane_north ;
